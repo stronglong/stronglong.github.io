@@ -5,7 +5,7 @@ pygments: true
 paginate: 8
 permalink: /:title
 
-title: StrongL
+title: StrongLong.me
 url: http://stronglong.me
 feed: /atom.xml
 author_info: <a href="http://stronglong.me/">StrongL</a>
