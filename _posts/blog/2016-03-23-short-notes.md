@@ -80,7 +80,7 @@ category: blog
 	Enter same passphrase again:<再次输入加密串>
 
 最后看到这样的界面，就成功设置ssh key了：
-![ssh key success] (/images/githubpages/ssh-key-set.png)
+![ssh key success](/images/githubpages/ssh-key-set.png)
 
 ###4、添加SSH key 到Github：
 在本机设置SSH Key之后，需要添加到Github上，以完成SSH链接的设置。
@@ -88,10 +88,10 @@ category: blog
 用文本编辑工具打开id_rsa.pub文件，如果看不到这个文件，需要设置显示隐藏文件。准确的饿复制这个文件的内容，才能保证设置成功。
 
 在Github的主页上点击设置按钮：
-![github account setting] (/images/githubpages/github-account-setting.png)
+![github account setting](/images/githubpages/github-account-setting.png)
 
 选择SSH Keys项，把复制的内容粘贴进去，然后点击Add Key按钮即可：
-![set ssh keys] (/images/githubpages/bootcamp_1_ssh.jpg)
+![set ssh keys](/images/githubpages/bootcamp_1_ssh.jpg)
 
 PS：如果要设置多个Github帐号，可以参看这个[多个github帐号的SSH Key切换](http://omiga.org/blog/archives/2269)，如果通过了文章的所述配置了host，那么多个帐号下面的提交会是一个人的，所以需要通过命令`git config --global --unset user.eamil`删除用户账户设置，在每一个repo下面使用`git config --local user.email'你的github邮箱@mail.com'` 命令单独设置用户账户信息
 
