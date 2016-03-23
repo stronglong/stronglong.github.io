@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 简要笔记
-description: MySQL zookeeper redis nginx host terminus-license ssh github
+title: Address already in use
+description: Jetty server - java.net.BindException on MAX OS X
 category: blog
 ---
 
