@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Address already in use
-description: Jetty server - java.net.BindException Address already in user (on MAX OS X)
+description: Jetty server - java.net.BindException Address already in user (on MAC OS X)
 category: blog
 ---
 
