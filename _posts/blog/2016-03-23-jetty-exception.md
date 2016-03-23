@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Address already in use
-description: Jetty server - java.net.BindException: Address already in use (on MAC OS X)
+title: 简要笔记
+description: MySQL zookeeper redis nginx host terminus-license ssh github
 category: blog
 ---
 
