@@ -101,6 +101,40 @@ category: blog
 	}
 
 
+
+差点忘了，factory得多加一个method，取得所有的数据
+
+	 public List<Map<String,String>> composeStarkReportExportFieldsMaps(List<UserBalanceDetailDto> dtos){
+        List<Map<String,String>> result = Lists.newArrayList();
+        Map<String,String> fieldsMap = null ;
+        UserBalanceDetail detail = null;
+        User user = null;
+        for (UserBalanceDetailDto dto : dtos){
+            fieldsMap = new HashMap<>();
+            if (dto.getDetail() != null){
+                detail = dto.getDetail();
+                if(detail.getId() != null) fieldsMap.put(StarkExportConstants.STARK_ID,detail.getId().toString());
+                if(detail.getCreatedAt() != null) fieldsMap.put(StarkExportConstants.STARK_DATE_AT,printDate(detail.getCreatedAt()));
+                if(detail.getUpdatedAt() != null) fieldsMap.put(StarkExportConstants.STARK_USER_ID,detail.getUserId().toString());
+                if(detail.getPoundage() != null) fieldsMap.put(StarkExportConstants.STARK_POUNDAGE,toYuan(detail.getPoundage()).toString());
+                if(detail.getBalance() != null) fieldsMap.put(StarkExportConstants.STARK_BANLANCE,toYuan(detail.getBalance()).toString());
+                if(detail.getBalance() != null) fieldsMap.put(StarkExportConstants.STARK_REAL_PAY,toYuan(detail.getBalance()).toString());
+                if(detail.getProvince() != null) fieldsMap.put(StarkExportConstants.STARK_PROVINCE,detail.getProvince());
+                if(detail.getCity() != null) fieldsMap.put(StarkExportConstants.STARK_CITY,detail.getCity());
+                if(detail.getBankName() != null) fieldsMap.put(StarkExportConstants.STARK_BANK_NAME,detail.getBankName());
+                if(detail.getBankOpenName() != null) fieldsMap.put(StarkExportConstants.STARK_BANK_OPEN_NAME,detail.getBankOpenName());
+                if(detail.getAccountNo() != null) fieldsMap.put(StarkExportConstants.STARK_ACCOUNT_NO,detail.getAccountNo());
+                if(detail.getStatus() != null) fieldsMap.put(StarkExportConstants.STARK_STATUS,toStringOfStarkStatus(detail.getStatus()));
+            }
+            if (dto.getUser() != null){
+                user = dto.getUser();
+                if(user.getRealName() != null) fieldsMap.put(StarkExportConstants.STARK_USER_NAME,user.getRealName());
+            }
+            result.add(fieldsMap);
+        }
+        return result;
+    }
+
 虽然导出结果和原来一样，但还是不能随便放进项目里，所在在此记录一下，以便后续使用。
 
 
