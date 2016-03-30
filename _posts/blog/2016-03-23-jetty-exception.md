@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Address already in use
-description: Jetty server - java.net.BindException Address already in user (on MAC OS X)
+description: 2016-03-23 | Jetty server - java.net.BindException Address already in user (on MAC OS X)
 category: blog
 ---
 

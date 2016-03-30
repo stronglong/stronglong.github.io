@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 简要笔记
-description: MySQL zookeeper redis nginx host terminus-license ssh github
+description: 2016-03-23 | MySQL zookeeper redis nginx host terminus-license ssh github
 category: blog
 ---
 
