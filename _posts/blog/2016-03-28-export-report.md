@@ -139,4 +139,4 @@ category: blog
 
 
 
-[StrongL]:    http://stronglong.com  "StrongL"
+[StrongL]:    http://stronglong.me  "StrongL"

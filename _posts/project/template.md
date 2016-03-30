@@ -8,5 +8,5 @@ description: jQuery是一个伟大作品，他的完成充满智慧，我们来�
 2012-01-16 By {{ site.author_info }}
 
 
-[StrongL]:    http://stronglong.com  "StrongL"
+[StrongL]:    http://stronglong.me  "StrongL"
 [1]:    {{ page.url}}  ({{ page.title }})
