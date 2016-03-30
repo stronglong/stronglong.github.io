@@ -2,11 +2,11 @@
 layout: post
 title: EventBus初体验
 description: 2016-03-30 | 以更新生鲜商品的库存信息为例
-category: blog
+category: project
 ---
 
 ## 概述
-因为不太会用EventBus，所以在项目之中，也只能参考前辈的代码，模仿着完成既定的需要。在这里简短的记录一下，利用event处理问题的过程。不了解具体是怎么实现的，所以暂时记录下来，以便后续使用。
+因为不太会用EventBus，所以在项目之中，也只能参考前辈的代码，模仿着完成既定的需要。在这里简短的记录一下，利用event处理问题的过程。不了解具体是怎么实现的，暂时记录下来，以便后续使用。
 
 ###CoreEventDispatcher
 事件分发器CoreEventDispatcher
