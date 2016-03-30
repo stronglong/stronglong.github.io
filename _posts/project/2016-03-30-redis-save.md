@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 项目中redis简易使用
-description: 2016-03-30 | redis存入一个id，在使用时去除此id
+description: 2016-03-30 | redis存入一个id，在使用时取出id
 category: project
 ---
 
