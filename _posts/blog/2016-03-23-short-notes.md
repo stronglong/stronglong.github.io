@@ -49,6 +49,11 @@ category: blog
 	$ ........
 	$ assets: ln -s ../yanma<前端名>/public yanma
 
+###9、elasticsearch
+
+  $ /usr/local/var/elasticsearch
+  $ elasticsearch
+
 ## 配置和使用Github
 
 ###1、检查SSH keys的设置
