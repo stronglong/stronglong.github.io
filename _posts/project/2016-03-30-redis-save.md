@@ -53,8 +53,8 @@ category: project
 		return "pay:" + userId + ":Wechat:openId";
 	}
 
-###取出redis只放置的id
-在需要去除的地方注入
+###取出redis中放置的id
+在需要取出的地方注入
 
 	@Autowired
 	private WechatRedisDao wechatRedisDao;
