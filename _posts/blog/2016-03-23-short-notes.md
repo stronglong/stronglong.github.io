@@ -51,8 +51,8 @@ category: blog
 
 ###9、elasticsearch
 
-  $ /usr/local/var/elasticsearch
-  $ elasticsearch
+    $ /usr/local/var/elasticsearch
+    $ elasticsearch
 
 ## 配置和使用Github
 
