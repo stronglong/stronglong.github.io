@@ -128,4 +128,4 @@ Git会根据用户的名字和邮箱来记录提交。Github也是用这些信�
 
 
 
-[StrongL]:    http://stronglong.me  "StrongL"
+[Strong]:    http://stronglong.me  "Strong"

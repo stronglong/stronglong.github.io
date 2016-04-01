@@ -43,4 +43,4 @@ category: blog
 
 
 
-[StrongL]:    http://stronglong.me  "StrongL"
+[Strong]:    http://stronglong.me  "Strong"

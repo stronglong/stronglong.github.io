@@ -258,4 +258,4 @@ category: project
         return true;
     }
 
-[StrongL]:    http://stronglong.me  "StrongL"
+[Strong]:    http://stronglong.me  "Strong"
