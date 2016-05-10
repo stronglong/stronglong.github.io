@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 商品名称写入user.dict，以供搜索使用
+title: 商品名称写入user.dict 以供搜索使用
 description: 2016-05-04 | 根据指定格式导出写入文件，只保留汉字后跟搜索权重
 category: project
 ---
