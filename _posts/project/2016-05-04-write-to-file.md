@@ -8,11 +8,11 @@ category: project
 ## 概述
 本来这次导出应该使用Python来实现，由于本人对Python不熟，so只能使用Java来写了。导出需要用到一个方法去获取需要导出的数据，此处不编写，直接使用已经写好的method。
 
-###流程
+##流程
 取出需要导出的数据，按照导出的数据格式要求对数据进行处理，拆分字符串，去除特殊字符只留中文汉字，且去掉重复数据。使用Guava Files进行写入文件，文件名为user.dict
 
-###代码
-####现成Dao
+##代码
+###现成Dao
 
 	/**
      * 根据条件查询商品列表
@@ -62,7 +62,7 @@ serviceImpl
         return response;
     }
 
-####Other Method
+###Other Method
 
 	/**
      * 操作商品名称
@@ -102,7 +102,7 @@ serviceImpl
 
 
 
-####写入method
+###写入method
 
 	 private void writeToFile(String content) {
         File fileName = new File("/Users/terminus/Desktop/user.dict");
@@ -120,7 +120,7 @@ serviceImpl
         }
     }
 
-####controller
+###controller
 最后还有一个controller
 
 	/**
