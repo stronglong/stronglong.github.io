@@ -116,7 +116,7 @@ category: project
     private Date createdAt;         //创建时间
     private Date updatedAt;         //更新时间
 
-####封装参数为json、取得sign签名
+###封装参数为json、取得sign签名
 sign签名获得流程：
 ![get sign](/images/other/get-sign.png)
 代码实现如下
@@ -139,7 +139,7 @@ sign签名获得流程：
     }
 `SHA1()`是一个Sha1加密工具，网上copy的代码。
 
-####获取Access_token
+###获取Access_token
 `getAccessToken()`方法实时获取acdess_token，access_token是datahub的调用命令的全局唯一票据，接入系统调用接口命令时都需要使用acces_token。access_token的有效期目前为2个小时，需定时刷新，重复获取将导致上次获取的access_token失效。
 此次对接中，使用redis存放access_token，同时存放第一次存入access_token 的时间，下次使用之前先判断是否在有效期内，在则使，否则重新获取access_token，并存入redis供下次使用。
 
@@ -220,7 +220,7 @@ sign签名获得流程：
 存入access_token的时候同时存入了当前时间，以供计算时间差用。
 得到access_token之后，即封装接口参数，采用POST方式连接，参数需要以json格式。
 如果链接成功，返回json格式的字符串。按需要取其中的数据即可。
--------------------------------------------------
+
 <font color=#A9A9A9>对接还有新会员注册线下会员卡、查询会员卡所有积分和查询会员卡消费小票，过程和注册如出一辙，改动的只是接口和参数。SO这里就不记录了。</font>
 
 
