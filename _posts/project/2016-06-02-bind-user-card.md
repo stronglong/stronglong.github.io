@@ -1,13 +1,13 @@
 ---
 layout: post
 title: 会员卡对接
-description: 2016-06-01| 项目需要对接会员卡，主要为绑定线下会员卡，申请会员卡，查询会员积分和消费记录
+description: 2016-06-01| 项目需要对接会员卡，主要记录绑定线下会员卡的过程
 category: project
 ---
 
->## 概述
->此次会员卡对接，采用HTTP协议方式对接。对接主要内容为如果也有线下会员卡，则可以在线绑定会员卡；如果么有，则可以在线申请会员卡。实时查询积分和会员卡消费记录。
->对接过程中记录点很多，这里主要记录大概过程，力求自己能明白就好。
+## 概述
+此次会员卡对接，采用HTTP协议方式对接。对接主要内容为如果也有线下会员卡，则可以在线绑定会员卡；如果么有，则可以在线申请会员卡。实时查询积分和会员卡消费记录。
+对接过程中记录点很多，这里主要记录大概过程，力求自己能明白就好。
 
 ###老会员绑定线下会员卡
 先给出代码，后做解释：
@@ -98,8 +98,8 @@ category: project
         session.removeAttribute("code");
     }
 
->参数：
->	`HOST`：对接主机IP、`PORT`：端口号、`WEB_APP`：应用、`APP_ID`：分配的应用ID、`TOKEN`：消息令牌、`COM_ID`：接口编号、`ACCESS_TOKNE`：调用接口凭证
+参数：
+	`HOST`：对接主机IP、`PORT`：端口号、`WEB_APP`：应用、`APP_ID`：分配的应用ID、`TOKEN`：消息令牌、`COM_ID`：接口编号、`ACCESS_TOKNE`：调用接口凭证
 
 `UserCard`会员卡对象信息
 
@@ -140,8 +140,8 @@ sign签名获得流程：
 `SHA1()`是一个Sha1加密工具，网上copy的代码。
 
 ####获取Access_token
->`getAccessToken()`方法实时获取acdess_token，access_token是datahub的调用命令的全局唯一票据，接入系统调用接口命令时都需要使用acces_token。access_token的有效期目前为2个小时，需定时刷新，重复获取将导致上次获取的access_token失效。
->此次对接中，使用redis存放access_token，同时存放第一次存入access_token 的时间，下次使用之前先判断是否在有效期内，在则使，否则重新获取access_token，并存入redis供下次使用。
+`getAccessToken()`方法实时获取acdess_token，access_token是datahub的调用命令的全局唯一票据，接入系统调用接口命令时都需要使用acces_token。access_token的有效期目前为2个小时，需定时刷新，重复获取将导致上次获取的access_token失效。
+此次对接中，使用redis存放access_token，同时存放第一次存入access_token 的时间，下次使用之前先判断是否在有效期内，在则使，否则重新获取access_token，并存入redis供下次使用。
 
 	private String getAccessToken() throws Exception{
         Response<String> response = userCardReadService.getAccessToken();
@@ -220,9 +220,8 @@ sign签名获得流程：
 存入access_token的时候同时存入了当前时间，以供计算时间差用。
 得到access_token之后，即封装接口参数，采用POST方式连接，参数需要以json格式。
 如果链接成功，返回json格式的字符串。按需要取其中的数据即可。
-
-—————————————————————————————————————————————
-><font color=#A9A9A9>对接还有新会员注册线下会员卡、查询会员卡所有积分和查询会员卡消费小票，过程和注册如出一辙，改动的只是接口和参数。SO这里就不记录了。</font>
+-------------------------------------------------
+<font color=#A9A9A9>对接还有新会员注册线下会员卡、查询会员卡所有积分和查询会员卡消费小票，过程和注册如出一辙，改动的只是接口和参数。SO这里就不记录了。</font>
 
 
 
