@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 会员卡对接(update)
-description: 2016-06-14| 更新上次会员卡对接，不走redis，直接access_token
+description: 2016-06-14| 项目需要对接会员卡，主要记录绑定线下会员卡的过程
 category: project
 ---
 
@@ -139,8 +139,8 @@ sign签名获得流程：
 `SHA1()`是一个Sha1加密工具，网上copy的代码。
 
 ###获取Access_token
-`getAccessToken()`方法实时获取acdess_token，access_token是datahub的调用命令的全局唯一票据，接入系统调用接口命令时都需要使用acces_token。access_token的有效期目前为2个小时，需定时刷新，重复获取将导致上次获取的access_token失效。
-`此次对接中，使用redis存放access_token，同时存放第一次存入access_token 的时间，下次使用之前先判断是否在有效期内，在则使，否则重新获取access_token，并存入redis供下次使用。`这是上次的解决方案，这次不使用。
+`getToken()`方法实时获取acdess_token，access_token是datahub的调用命令的全局唯一票据，接入系统调用接口命令时都需要使用acces_token。access_token的有效期目前为2个小时，需定时刷新，重复获取将导致上次获取的access_token失效。
+~~此次对接中，使用redis存放access_token，同时存放第一次存入access_token 的时间，下次使用之前先判断是否在有效期内，在则使，否则重新获取access_token，并存入redis供下次使用。~~ 这是上次的解决方案，这次不使用。
 	直接每次都获取access_token
 
 	 private String getToken() throws Exception{
