@@ -1,15 +1,14 @@
 ---
 layout: post
-title: 会员卡对接(error)
-description: 2016-06-01| 项目需要对接会员卡，主要记录绑定线下会员卡的过程
+title: 会员卡对接(update)
+description: 2016-06-14| 更新上次会员卡对接，不走redis，直接access_token
 category: project
 ---
 
 ## 概述
-此次会员卡对接，采用HTTP协议方式对接。对接主要内容为如果也有线下会员卡，则可以在线绑定会员卡；如果么有，则可以在线申请会员卡。实时查询积分和会员卡消费记录。
-对接过程中记录点很多，这里主要记录大概过程，力求自己能明白就好。
+这次update会员卡对接，是因为上次对接出现了error，error出的也太low，自己打自己脸。文档理解有误，把简单的往复杂处想。最后得出一结论：慎重看文档，一切应从简。
 
-###老会员绑定线下会员卡
+###还是老会员绑定线下会员卡
 先给出代码，后做解释：
 
 	/**
@@ -43,7 +42,7 @@ category: project
             if(!Arguments.isNull(cardResponse.getResult())){
                 throw new JsonResponseException(500,"user.card.is.exist");
             }
-            String ACCESS_TOKEN = getAccessToken();
+            String ACCESS_TOKEN = getToken();
             Map<String, Object> params = new HashMap<>();
             params.put("vcardno", cardNum);
             params.put("vphone", mobile);
@@ -141,89 +140,24 @@ sign签名获得流程：
 
 ###获取Access_token
 `getAccessToken()`方法实时获取acdess_token，access_token是datahub的调用命令的全局唯一票据，接入系统调用接口命令时都需要使用acces_token。access_token的有效期目前为2个小时，需定时刷新，重复获取将导致上次获取的access_token失效。
-此次对接中，使用redis存放access_token，同时存放第一次存入access_token 的时间，下次使用之前先判断是否在有效期内，在则使，否则重新获取access_token，并存入redis供下次使用。
+`此次对接中，使用redis存放access_token，同时存放第一次存入access_token 的时间，下次使用之前先判断是否在有效期内，在则使，否则重新获取access_token，并存入redis供下次使用。`这是上次的解决方案，这次不使用。
+	直接每次都获取access_token
 
-	private String getAccessToken() throws Exception{
-        Response<String> response = userCardReadService.getAccessToken();
-        if(!response.isSuccess()){
-            log.error("find access token failed,cause:{}",response.getError());
-            throw new ServiceException(response.getError());
-        }
-        return response.getResult();
+	 private String getToken() throws Exception{
+        String HOST = configCenter.get(USER_CARD_HOST_IP);
+        String PORT = configCenter.get(USER_CARD_HOST_PORT);
+        String WEB_APP = configCenter.get(USER_CARD_WEB_APP);
+        String APP_ID = configCenter.get(USER_CARD_APP_ID);
+        String SECRET = configCenter.get(USER_CARD_SECRET);
+        String url = "http://"+HOST+":"+PORT+"/"+WEB_APP+"/access_token?appid="+APP_ID+"&secret="+SECRET;
+        log.info("获取access_token url:"+url);
+        String body = HttpRequest.get(url).body();
+        log.info("获取access_token返回数据:"+body);
+        ObjectMapper mapper = new ObjectMapper();
+        Map data =mapper.readValue(body,Map.class);
+        String access_token = (String) data.get("access_token");
+        return access_token;
     }
-    ——————————————————————————————————————————————————
-	 @Override
-    public Response<String> getAccessToken() {
-        try{
-            Optional<String> access = userCardRedisDao.getAccessToken(ACCESS_TOKEN);
-            Optional<String> time = userCardRedisDao.getTime(ACCESS_TOKEN_TIME);
-            if(access.isPresent() && time.isPresent()){
-                Date old = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(time.get());
-                Date now = new Date();
-                int hours = Hours.hoursBetween(new DateTime(old),new DateTime(now)).getHours() % 60 ;
-                int minutes =  Minutes.minutesBetween(new DateTime(old),new DateTime(now)).getMinutes() % 60 ;
-                int total = hours > 0 ? hours * 60 + minutes : minutes;
-                if(total <= 115){
-                    return Response.ok(userCardRedisDao.getAccessToken(ACCESS_TOKEN).get());
-                }
-                return Response.ok(getToken());
-            }
-            return Response.ok(getToken());
-        } catch (Exception e){
-            log.error("failed to get access token ,cause:{}",Throwables.getStackTraceAsString(e));
-            return Response.fail(e.getMessage());
-        }
-    }
-
-`UserCardRedisDao`：存入access_token，只存2个小时，后被覆盖。
-
-	@Repository
-	public class UserCardRedisDao {
-    @Autowired
-    private JedisTemplate jedisTemplate;
-    public void setAccessToken(final String key, final String value){
-        jedisTemplate.execute(new JedisTemplate.JedisActionNoResult() {
-            @Override
-            public void action(Jedis jedis) {
-                jedis.set(key,value);
-            }
-        });
-    }
-    public void setTime(final String key,final String time){
-        jedisTemplate.execute(new JedisTemplate.JedisActionNoResult() {
-            @Override
-            public void action(Jedis jedis) {
-                jedis.set(key,time);
-            }
-        });
-    }
-    public Optional<String> getAccessToken(final String key){
-        String value  = jedisTemplate.execute(new JedisTemplate.JedisAction<String>() {
-            @Override
-            public String action(Jedis jedis) {
-                return jedis.get(key);
-            }
-        });
-        return Optional.fromNullable(Params.trimToNull(value));
-    }
-    public Optional<String> getTime(final String key){
-        String time  = jedisTemplate.execute(new JedisTemplate.JedisAction<String>() {
-            @Override
-            public String action(Jedis jedis) {
-                return jedis.get(key);
-            }
-        });
-        return Optional.fromNullable(Params.trimToNull(time));
-    }
-	}
-
-存入access_token的时候同时存入了当前时间，以供计算时间差用。
-得到access_token之后，即封装接口参数，采用POST方式连接，参数需要以json格式。
-如果链接成功，返回json格式的字符串。按需要取其中的数据即可。
-
-<font color=#A9A9A9>对接还有新会员注册线下会员卡、查询会员卡所有积分和查询会员卡消费小票，过程和注册如出一辙，改动的只是接口和参数。SO这里就不记录了。</font>
-
-
 
 
 [StrongL]:    http://stronglong.me  "StrongL"
